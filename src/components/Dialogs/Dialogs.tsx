@@ -1,26 +1,39 @@
 import React from 'react';
 import s from './Dialogs.module.scss'
+import {DialogItem} from "./DialogItem/DialogItem";
+import {MessageItem} from "./MessageItem/MessageItem";
+import {dialogsDataType, messagesDataType} from "../../redux/state";
 
-export const Dialogs = () => {
+type dialogsType = {
+    state: {
+        dialogsData: dialogsDataType[],
+        messagesData: messagesDataType[],
+    }
+}
+
+export const Dialogs = (props: dialogsType) => {
+
     return (
         <div className={s.dialogs}>
 
             <div className={s.dialogs__items}>
-
-                <div className={`${s.item} ${s.active}`}>Lover</div>
-                <div className={s.item}>Mr. Doctor</div>
-                <div className={s.item}>Commissar</div>
-
-                <div className={s.item}>Mafia</div>
-                <div className={s.item}>Don Mafia</div>
-                <div className={s.item}>Peaceful resident</div>
-
+                {
+                    props.state.dialogsData.map(el=>{
+                        return (
+                            <DialogItem name={el.name} id={el.id} avatar={el.avatar}/>
+                        )
+                    })
+                }
             </div>
 
             <div className={s.dialogs__messages}>
-                <div className={s.message}>Shall we spend tonight together?</div>
-                <div className={s.message}>I have a suspicion that you are the mafioso.</div>
-                <div className={s.message}>Tonight you will die!</div>
+                {
+                    props.state.messagesData.map(el=>{
+                        return (
+                            <MessageItem textMessage={el.message}/>
+                        )
+                    })
+                }
             </div>
         </div>
     );

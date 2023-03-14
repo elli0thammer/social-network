@@ -1,17 +1,25 @@
 import React from 'react';
 import s from './Main.module.scss'
-import {MyWall} from "./MyWall/MyWall";
+import {MyPosts} from "./MyPosts/MyPosts";
+import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
+import {friendsDataType, postsDataType} from "../../redux/state";
+import {Friends} from "./Friends/Friends";
 
-export const Main = () => {
+type mainType = {
+    state: {
+        postsData: postsDataType[],
+        friendsData: friendsDataType[],
+    }
+}
+
+export const Main = (props: mainType) => {
     return (
         <main className={s.main}>
-            <div>
-                <img src='#'/>
-                <p>I like to eat dumplings and play genshin</p>
-            </div>
+            <ProfileInfo/>
 
-            <MyWall/>
+            <Friends dataFriends={props.state.friendsData}/>
 
+            <MyPosts dataMyPosts={props.state.postsData}/>
         </main>
     );
 };
